@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block headextra %}
+<link rel="stylesheet" type="text/css" href="{% static 'cms/css/chapter_style.css' %}">
+<link href="https://fonts.googleapis.com/css?family=Bitter" rel="stylesheet">
+
+{% block headmore %}
+
+{% endblock headmore %}
+
+{% endblock headextra %}
+
+{% block secondary-nav %}
+<script type="text/javascript" async
+  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML">
+</script>
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}
+});
+</script>
+
+   <ul class="nav nav-tabs justify-content-center nav-fill" id="myTab" role="tablist">
+	  <li class="nav-item">
+	    <a class="nav-link" id="home-tab" href="{{chapter_instance.get_chapter_select_url}}" role="tab" aria-controls="home" aria-selected="false">Home</a>
+	  </li>
+	    {% for subtopic_obj in subtopics %}
+		  <li class="nav-item">
+		    <a class="nav-link" id="{{subtopic_obj.slug}}" href="{{subtopic_obj.get_subtopic_select_url}}" role="tab" aria-controls="Subtopic_description" aria-selected="false">{{subtopic_obj.title}}</a>
+		  </li>
+	    {% endfor %}
+	 	{% if saqs %}
+		  <li class="nav-item">
+		    <a class="nav-link" id="saq-tab" href="{{chapter_instance.get_saq_list_url}}" role="tab" aria-controls="saq" aria-selected="false">SAQ</a>
+		  </li>
+	  	{% endif %}
+	  	{% if numericals %}
+		  <li class="nav-item">
+		    <a class="nav-link" id="numerical-tab" href="{{chapter_instance.get_numerical_list_url}}" role="tab" aria-controls="numerical" aria-selected="false">Numerical</a>
+		  </li>
+	  	{% endif %}
+	</ul>
+<script type = text/javascript>
+	{% if subtopic %}
+		$("#home-tab").removeClass("active");
+		$("#{{subtopic.slug}}").addClass("active");
+	{% elif numerical_boolean %}
+		$("#home-tab").removeClass("active");
+		$("#numerical-tab").addClass("active");
+	{% elif saq_boolean %}
+		$("#home-tab").removeClass("active");
+		$("#saq-tab").addClass("active");
+	{% else %}
+		$("#home-tab").addClass("active");
+	{% endif %}
+</script>
+
+{% endblock secondary-nav%}

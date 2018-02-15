@@ -1,0 +1,34 @@
+{% extends 'chapter_base.html' %}
+{% load markdown_deux_tags %}
+{% load static %}
+
+{%block headmore%}
+<link rel="stylesheet" type="text/css" href="{% static 'cms/css/numerical_detail.css' %}">
+{%endblock headmore%}
+
+{% block content %}
+<div class="document">
+	<div class="numerical-head alert" role="alert">
+		<small>
+			<div class="path">
+				Path: <a href="{% url 'cms:subject_list' %}"> Home </a> | <a href="{{chapter_instance.get_subject_select_from_chapter}}" >{{chapter_instance.subject}} </a> | <a href = "{{chapter_instance.get_chapter_select_url}}" >{{chapter_instance.chapter_name}} </a> | <a href = "{{chapter_instance.get_numerical_list_url}}"> Numericals </a>
+			</div>
+		</small>
+		<h1 class='heading'> Numerical Problems and Solutions</h1>
+		<p><a href="{{chapter_instance.get_numerical_create_url}}">Add new</a></p>
+		<hr/>
+	</div>
+
+	<div class="numerical-list offset-sm-1 offset-md-1">
+		{% for obj in numericals %}
+		<div class = 'numerical-question heading'><h4>{{obj.numerical_serial}}. {{obj.question}}
+			<a class="edit-link" href="{{obj.get_numerical_edit_url}}">Edit</a></h4>
+		</div>
+			<p><span class="badge-secondary remark"> {{obj.remarks}} </span></p>
+
+			<div class = 'numerical-answer content'>{{obj.answer|markdown}}</div>
+			<hr/>
+		{%endfor%}
+	</div>
+</div>
+{% endblock content %}

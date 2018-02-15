@@ -1,0 +1,21 @@
+.document{
+	margin-left: 5%;
+	margin-right: 5%;
+	margin-top: 2em;
+}
+
+.heading{
+	font-family: 'Bitter', 'serif' !important;
+}
+
+.card{
+	box-shadow: 4px 4px 10px rgba(0,0,0,0.16);
+}
+
+.card h4{
+	margin-bottom: 0px;
+}
+
+body{
+	background: linear-gradient(to right, #ffffff, #ececec);
+}

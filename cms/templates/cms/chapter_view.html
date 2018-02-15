@@ -1,0 +1,105 @@
+{% extends 'base.html' %}
+
+{% block page_title %}
+	{{chapter_instance.chapter_name}}
+
+{% endblock page_title %}
+
+<!--This block is for the secondary navigation bar for the tabs. -->
+{% block secondary-nav %}
+   <ul class="nav nav-tabs justify-content-center nav-fill" id="myTab" role="tablist">
+	  <li class="nav-item">
+	    <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Home</a>
+	  </li>
+	    {% for subtopic_obj in subtopics %}
+		  <li class="nav-item">
+		    <a class="nav-link" id="{% cycle 'subtopic1' 'subtopic2' 'subtopic3' 'subtopic4' 'subtopic5' 'subtopic6' 'subtopic7' 'subtopic8' 'subtopic9' 'subtopic10' 'subtopic11' 'subtopic12' 'subtopic13' 'subtopic14' 'subtopic15' 'subtopic16' 'subtopic17' 'subtopic18' 'subtopic19' 'subtopic20' 'subtopic21' 'subtopic22' 'subtopic23' 'subtopic24' 'subtopic25' 'subtopic26' 'subtopic27' 'subtopic28' 'subtopic29' 'subtopic30' 'subtopic31' 'subtopic32'   %}" data-toggle="tab" href="#{{subtopic_obj.slug}}" role="tab" aria-controls="{{subtopic_obj.slug}}" aria-selected="false">{{subtopic_obj.title}}</a>
+		  </li>
+	    {% endfor %}
+	  <li class="nav-item">
+	    <a class="nav-link" id="saq-tab" data-toggle="tab" href="#saq" role="tab" aria-controls="saq" aria-selected="false">SAQ</a>
+	  </li>
+	  <li class="nav-item">
+	    <a class="nav-link" id="numerical-tab" data-toggle="tab" href="#numerical" role="tab" aria-controls="numerical" aria-selected="false">Numerical</a>
+	  </li>
+	</ul>
+{% endblock secondary-nav%}
+
+
+{%block content%}
+	<div class="path">
+		Path: <a href="{% url 'cms:subject_list' %}"> Home </a> | <a href="{{chapter_instance.get_subject_select_from_chapter}}" >{{chapter_instance.subject}} </a> | <a href = "{{chapter_instance.get_chapter_select_url}}" >{{chapter_instance.chapter_name}} </a>
+	</div>
+<div class="tab-content" id="myTabContent">
+  <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+  		<h1>{{chapter_instance.chapter_serial}}. {{chapter_instance.chapter_name}}</h1>
+		<p><a href="{{chapter_instance.get_subtopic_create_url}}">Create subtopic</a></p>
+		{%for obj in subtopics%}
+			<p><a id = "call_{{obj.slug}}" href="#{{obj.slug}}">{{obj.subtopic_serial}}. {{obj.title}} </a></p>
+		{%endfor %}
+		<p><a id="call_saq" href = "#saq">Short Answer Questions </a></p>
+		<p><a id="call_numerical" href = "#numerical" >Numerical Problems </a></p>
+  </div>
+  {% for subtopic_obj in subtopics %}
+  	<div class="tab-pane fade" id="{{subtopic_obj.slug}}"  role="tabpanel" aria-labelledby="{% cycle 'subtopic1' 'subtopic2' 'subtopic3' 'subtopic4' 'subtopic5' 'subtopic6' 'subtopic7' 'subtopic8' 'subtopic9' 'subtopic10' 'subtopic11' 'subtopic12' 'subtopic13' 'subtopic14' 'subtopic15' 'subtopic16' 'subtopic17' 'subtopic18' 'subtopic19' 'subtopic20' 'subtopic21' 'subtopic22' 'subtopic23' 'subtopic24' 'subtopic25' 'subtopic26' 'subtopic27' 'subtopic28' 'subtopic29' 'subtopic30' 'subtopic31' 'subtopic32' %}">
+  		<h1>{{subtopic_obj.subtopic_serial}}. {{subtopic_obj.title}}</h1> 
+		<p><a href="{{subtopic_obj.get_subtopic_edit_url}}">Edit</a></p>
+		<p>{{subtopic_obj.remarks}}</p>
+
+		<p><a href="{{subtopic_obj.get_subsection_create_url}}">Add new subsection</a></p>
+		{% for subsection_obj in subsections %}
+  			{% if subsection_obj.subtopic == subtopic_obj %}
+				<p>{{subsection_obj.title}}</p>
+				<small>{{subsection_obj.remarks}}</small>
+				<p><a href="{{subsection_obj.get_subsection_edit_url}}">Edit</a></p>
+				<p class = 'content-markdown'> 
+				{{subtopic_obj.content}} </p>
+  			{% endif %}
+  		{% endfor %}
+  	</div>
+  {% endfor %}
+  <div class="tab-pane fade" id="saq" role="tabpanel" aria-labelledby="saq-tab">
+	<p>Short Answer Questions and Answers</p>
+	<p><a href="{{chapter_instance.get_saq_create_url}}" >Add new </a></p>
+	{% for obj in saqs %}
+		<p class = 'content-markdown'>{{obj.question_serial}}. {{obj.question}}</p>
+		<p><a href="{{obj.get_saq_edit_url}}">Edit</a></p>
+		</hr>
+		<p class = 'content-markdown'>{{obj.answer}}</p>
+		</hr>
+	{%endfor%}
+  </div>
+  
+  <div class="tab-pane fade" id="numerical" role="tabpanel" aria-labelledby="numerical-tab">
+  			<p>Numerical Problems and Solutions</p>
+	<p><a href="{{chapter_instance.get_numerical_create_url}}">Add new</a></p>
+	{% for obj in numericals %}
+		<p class = 'content-markdown'>{{obj.numerical_serial}}. {{obj.question|linebreaks}}</p>
+		<p><a href="{{obj.get_numerical_edit_url}}">Edit</a></p>
+		</hr>
+		<p class = 'content-markdown'>{{obj.answer|linebreaks}}</p>
+		</hr>
+
+	{%endfor%}
+  </div>
+</div>
+
+		<script type = "text/javascript">
+			$(document).ready(function(){
+
+				{% for obj in subtopics %}
+					$("#call_{{obj.slug}}").click(function(){
+						$("{% cycle '#subtopic1' '#subtopic2' '#subtopic3' '#subtopic4' '#subtopic5' '#subtopic6' '#subtopic7' '#subtopic8' '#subtopic9' '#subtopic10' '#subtopic11' '#subtopic12' '#subtopic13' '#subtopic14' '#subtopic15' '#subtopic16' '#subtopic17' '#subtopic18' '#subtopic19' '#subtopic20' '#subtopic21' '#subtopic22' '#subtopic23' '#subtopic24' '#subtopic25' '#subtopic26' '#subtopic27' '#subtopic28' '#subtopic29' '#subtopic30' '#subtopic31' '#subtopic32'  %}").click();
+						});
+				{% endfor %}
+
+				$("#call_saq").click(function(){
+					$('#saq-tab').click();
+				});
+				$("#call_numerical").click(function(){
+					$('#numerical-tab').click();
+				});
+			});
+		</script>
+
+{%endblock content%}

@@ -1,0 +1,31 @@
+.subsection{
+	margin-right: 25%;
+}
+
+.subtopic-head{
+	margin-right: 20%;
+	margin-left: 5%;
+
+}
+
+.subsection-head ul{
+  list-style-type: none;
+}
+
+.subsection_image figure{
+	margin-left: 2rem;
+}
+
+.subsection-image img{
+	max-height: 300px;
+}
+
+.subsection-image .image-single{
+	float: right;
+}
+
+.clearfix::after {
+    content: "";
+    clear: both;
+    display: table;
+}

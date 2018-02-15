@@ -1,0 +1,21 @@
+{% extends 'pending/pending_base.html' %}
+{% load markdown_deux_tags %}
+
+{% block content %}
+<div class="offset-md-1 offset-sm-1">
+
+	<p>Pending Short Answer Questions</p>
+	{% for obj in saq_set %}
+		<p><strong>{% ifchanged %} {{obj.chapter}} {% endifchanged %}</strong></p>
+		<p class = 'content-markdown'>{{obj.question_serial}}. {{obj.question}}
+			<a href="{{obj.get_saq_approval_url}}"> View Details </a></p>
+		<hr/>
+
+	{%endfor%}
+</div>
+{% endblock content %}
+
+{% block path %}
+ <a href="{% url 'cms:subject_list' %}"> Pending Content </a>
+
+{% endblock path %}

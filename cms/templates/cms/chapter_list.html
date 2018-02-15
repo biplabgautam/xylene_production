@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block headextra %}
+	<link rel="stylesheet" type="text/css" href="{% static 'cms/css/chapter_list_style.css' %}">
+	<link href="https://fonts.googleapis.com/css?family=Bitter" rel="stylesheet">
+{% endblock headextra %}
+
+{% block content %}
+<div class="document">
+	<div class="subject-top">
+	<small><a href="{% url 'cms:subject_list' %}"> Home </a> | <a href="{{subject_instance.get_subject_select_url}}" >{{subject_instance}} </a></small>
+
+		<h1 class="heading"> {{subject_instance}} <a class="edit-link" href="{{subject_instance.get_subject_edit_url}}" >Edit</a></h1>
+		<a href="{{subject_instance.get_chapter_create_url}}">Create chapter</a>
+		<hr/>
+	</div>
+	<div class="card-deck">
+		{%for obj in chapters%}
+		  <div class="col-md-3 col-sm-6">
+		    <div class="card mb-3" style="height: 300px;">
+					{%if obj.poster_image %}
+		    	<a href="{{obj.get_chapter_select_url}}" > <img class="card-img-top" src="{{obj.poster_thumbnail.url}}" alt="Card image cap"> </a>
+					{% endif %}
+					<div class="card-body">
+		        <a href="{{obj.get_chapter_select_url}}" > <strong class="card-title heading"> {{obj.chapter_serial}}. {{obj.chapter_name}}</strong> </a>
+		        <p class="card-text">{{obj.poster_text}}</p>
+		      </div>
+		    </div>
+		  </div>
+		{% endfor %}
+	</div>
+</div>
+{% endblock content %}

@@ -1,0 +1,28 @@
+{%extends "base.html"%}
+{% load crispy_forms_tags %}
+{% load static %}
+
+{% block headextra %}
+{{ form.media }}
+<link href="https://fonts.googleapis.com/css?family=Bitter" rel="stylesheet">
+<link rel="stylesheet" type="text/css" href="{% static 'cms/css/form_style.css' %}">
+{% endblock headextra %}
+
+{% block path %}
+ <a href="{% url 'cms:subject_list' %}"> Home </a> | <a href="{{chapter_instance.get_subject_select_from_chapter}}" >{{chapter_instance.subject}} </a> | <a href = "{{chapter_instance.get_chapter_select_url}}" >{{chapter_instance.chapter_name}} </a> | <a href = "{{subtopic_instance.get_subtopic_select_url}}"> {{subtopic_instance}} </a>
+
+{% endblock path %}
+
+{% block content %}
+<div class = 'col-sm-6 offset-sm-1 offset-md-2'>
+	<h1 class="heading">{{subtopic_instance.title}}</h1>
+	<p><small>{{chapter_instance.chapter_name}}</small> | 
+	<small>{{chapter_instance.subject}}</small></p>
+	<hr/>
+	<form method = 'POST' action = '' enctype = 'multipart/form-data'>
+	{% csrf_token %}
+	{{form|crispy}}
+	<input type="submit" class= 'btn btn-default' value = "Okay"/>
+	</form>
+</div>
+{%endblock content %}

@@ -1,0 +1,17 @@
+{% extends 'pending/pending_base.html' %}
+<div class="offset-md-1 offset-sm-1">
+{% block content %}
+	{% load markdown_deux_tags %}
+		<h4>Pending Subsection Images</h4>
+		{% for obj in subsection_images_set %}
+			<p><strong>{% ifchanged %} {{obj.subtopic.chapter}} | {{obj.subsection}} {% endifchanged %}</strong></p>
+			<p class = 'content-markdown'>{{obj.image_serial}}. {{obj.caption}} <a href="{{obj.get_subsection_image_approval_url}}"> View details </a></p>
+			<hr/>
+
+		{%endfor%}
+	{% endblock content %}
+</div>
+{% block path %}
+ <a href="{% url 'cms:subject_list' %}"> Pending Content </a>
+
+{% endblock path %}

@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+
+{%block content%}
+<div class="offset-sm-1 offset-md-1">
+	<em>Contents you have submitted but are in pending state. These contents will be reviewed and then published.</em>
+	{% if subsections %}
+	<h3> Subsections </h3>
+	<ol>
+		{% for obj in subsections %}
+			<li><a href = "{{obj.get_tempsubsection_see_url}}">{{obj.title}}</a></li>
+		{% endfor %}
+	</ol>
+	{% endif %}
+
+	{% if saqs %}
+	<h3> SAQs </h3>
+	<ol>
+		{% for obj in saqs %}
+			<li><a href = "{{obj.get_tempsaq_see_url}}">{{obj.question}}</a></li>
+		{% endfor %}
+	</ol>	
+	{% endif %}
+
+	{% if numericals %}
+	<h3> Numericals </h3>
+	<ol>
+		{% for obj in numericals %}
+			<li><a href = "{{obj.get_tempnumerical_see_url}}">{{obj.question}}</a></li>
+		{% endfor %}
+	</ol>
+	{% endif %}
+
+	{% if subsection_images %}
+	<h3> Subsection Images </h3>
+	<ol>
+		{% for obj in subsection_images %}
+			<li><a href = "{{obj.get_tempsubsection_image_see_url}}">{{obj.caption}}</a></li>
+		{% endfor %}
+	</ol>
+	{% endif %}
+</div>
+{% endblock content %}

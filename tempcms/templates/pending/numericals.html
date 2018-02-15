@@ -1,0 +1,19 @@
+{% extends 'pending/pending_base.html' %}
+{% load markdown_deux_tags %}
+
+{% block content %}
+<div class="offset-sm-1 offset-md-1">
+	<p>Pending Numericals</p>
+	{% for obj in numerical_set %}
+		<p><strong>{% ifchanged %} {{obj.chapter}} {% endifchanged %}</strong></p>
+		<p class = 'content-markdown'>{{obj.numerical_serial}}. {{obj.question}} <a href="{{obj.get_numerical_approval_url}}"> View details</a></p>
+		</hr>
+
+	{%endfor%}
+</div>
+{% endblock content %}
+
+{% block path %}
+ <a href="{% url 'cms:subject_list' %}"> Pending Content </a>
+
+{% endblock path %}

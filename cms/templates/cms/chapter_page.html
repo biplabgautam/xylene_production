@@ -1,0 +1,59 @@
+{% extends 'chapter_base.html' %}
+{% load static %}
+
+{% block headmore %}
+	<link rel="stylesheet" type="text/css" href="{% static 'cms/css/chapter_page_style.css' %}">
+	<link href="https://fonts.googleapis.com/css?family=Bitter" rel="stylesheet">
+{% endblock headmore %}
+
+{%block content%}
+<div class = "document subtopic-list">
+	<div class="chapter-page-top">
+		<small><div class="path">
+			Path: <a href="{% url 'cms:subject_list' %}"> Home </a> | <a href="{{chapter_instance.get_subject_select_from_chapter}}" >{{chapter_instance.subject}} </a> | <a href = "{{chapter_instance.get_chapter_select_url}}" >{{chapter_instance.chapter_name}} </a>
+		</div></small>
+		<h1 class = "heading">{{chapter_instance.chapter_serial}}. {{chapter_instance.chapter_name}}
+			<a class="edit-link" href={{chapter_instance.get_chapter_edit_url}}>Edit</a>
+		</h1>
+		<p><a href="{{chapter_instance.get_subtopic_create_url}}">Create subtopic</a> |
+		<a href="{{chapter_instance.get_saq_create_url}}">Add SAQs</a> |
+		<a href="{{chapter_instance.get_numerical_create_url}}">Add Numericals</a></p>
+		<hr/>
+	</div>
+	<div class="card-deck">
+		{%for obj in subtopics%}
+		  <div class="col-md-3 col-sm-4">
+		    <div class="card mb-3" style="height: 250px;">
+					{% if obj.poster_image %}
+		    	<a href="{{obj.get_subtopic_select_url}}"> <img class="card-img-top" src="{{obj.poster_thumbnail.url}}" alt="Card image cap"> </a>
+					{% endif %}
+					<div class="card-body">
+		        <a href="{{obj.get_subtopic_select_url}}"> <strong class="heading card-title">{{obj.subtopic_serial}}. {{obj.title}}</strong> </a>
+		        <p class="card-text">{{obj.poster_text}}</p>
+		      </div>
+		    </div>
+		  </div>
+		{% endfor %}
+		{% if saqs %}
+		<div class="col-md-3 col-sm-4">
+		    <div class="card mb-3" style="height: 250px;">
+		    	<a href="{{chapter_instance.get_saq_list_url}}" ><img class="card-img-top" src="..." alt="Card image cap"></a>
+		      <div class="card-body">
+		        <a href="{{chapter_instance.get_saq_list_url}}" ><strong class="heading card-title">Short Answer Questions</p></strong>
+		      </div>
+		    </div>
+		 </div>
+		{% endif %}
+		{% if numericals %}
+		<div class="col-md-3 col-sm-4 ">
+		    <div class="card mb-3" style="height: 250px;">
+		    	<a href="{{chapter_instance.get_numerical_list_url}}" ><img class="card-img-top" src="..." alt="Card image cap"></a>
+		    	<div class="card-body">
+		        <a href="{{chapter_instance.get_numerical_list_url}}" ><strong class="heading card-title">Numerical Problems</p></strong>
+		      </div>
+		    </div>
+		 </div>
+	</div>
+		{% endif %}
+</div>
+{%endblock content%}

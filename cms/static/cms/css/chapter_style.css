@@ -1,0 +1,41 @@
+.document{
+	margin-left: 5%;
+	margin-right: 5%;
+}
+.content{
+    color: black;
+    font-family: Verdana, Times New Roman;
+    padding: 1%;
+}
+
+.heading {
+	font-family: 'Bitter', 'serif' !important;
+}
+
+.edit-link{
+	float: right;
+}
+
+.remark{
+	font-family:'Bitter', 'serif';
+}
+
+.eqn{
+	margin-left: 20%;
+}
+
+figcaption{
+	font-style: italic;
+	padding-left: 5%;
+}
+
+.nav-tabs .active{
+	border-top-width: 3px !important;
+	border-top-color: #59c9e6 !important;
+	color: black;
+}
+
+.nav-tabs :hover{
+	border-top-width: 3px !important;
+	border-top-color: #59c9e6 !important;
+}

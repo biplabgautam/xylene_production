@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+
+{% block secondary-nav %}
+<script type="text/javascript" async
+  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML">
+</script>
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}
+});
+</script>
+
+   <ul class="nav nav-tabs justify-content-center nav-fill" id="myTab" role="tablist">
+	  <li class="nav-item">
+	    <a class="nav-link active" id="subsections-tab" href="{%url 'tcms:pending_subsections'%}" role="tab" aria-controls="subsections" aria-selected="false">Subsections</a>
+	  </li>
+	  <li class="nav-item">
+	    <a class="nav-link" id="saqs-tab" href="{%url 'tcms:pending_saqs'%}" role="tab" aria-controls="saqs" aria-selected="false">SAQs</a>
+	  </li>
+	  <li class="nav-item">
+	    <a class="nav-link" id="numericals-tab" href="{%url 'tcms:pending_numericals'%}" role="tab" aria-controls="numericals" aria-selected="false">Numericals</a>
+	  </li>
+	  <li class="nav-item">
+	    <a class="nav-link" id="images-tab" href="{% url 'tcms:pending_subsection_images'%}" role="tab" aria-controls="images" aria-selected="false">Images</a>
+	  </li>
+	</ul>
+	<script type = text/javascript>
+	{% if saq_boolean %}
+		$("#subsections-tab").removeClass("active");
+		$("#saqs-tab").addClass("active");
+	{% elif numerical_boolean %}
+		$("#subsections-tab").removeClass("active");
+		$("#numericals-tab").addClass("active");
+	{% elif subsection_image_boolean %}
+		$("#subsections-tab").removeClass("active");
+		$("#images-tab").addClass("active");
+	{% endif %}
+
+	</script>
+{% endblock secondary-nav%}

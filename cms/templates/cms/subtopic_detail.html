@@ -1,0 +1,58 @@
+{% extends 'chapter_base.html' %}
+{% load markdown_deux_tags %}
+{% load static %}
+
+{%block headmore%}
+<link rel="stylesheet" type="text/css" href="{% static 'cms/css/subtopic_detail.css' %}">
+{%endblock headmore%}
+
+{%block content%}
+<div class="document">
+	<div class = "subtopic-head alert" role = "alert">
+		<div class = "path">
+			<small> Path: <a href="{% url 'cms:subject_list' %}"> Home </a> | <a href="{{chapter_instance.get_subject_select_from_chapter}}" >{{chapter_instance.subject}} </a> | <a href = "{{chapter_instance.get_chapter_select_url}}" >{{chapter_instance.chapter_name}} </a> | <a href = "{{subtopic.get_subtopic_select_url}}"> {{subtopic}} </a></small>
+		</div>
+		<h1 class = 'heading'>{{subtopic.title}} <small> <a class="edit-link" href="{{subtopic.get_subtopic_edit_url}}">Edit</a> </small> </h1>
+		<p>{{subtopic.remarks}}</p>
+	
+		<p><a href="{{subtopic.get_subsection_create_url}}">Add new subsection</a> | <a href="{{subtopic.get_subsection_image_create_url}}">Add new image</a></p>
+		<hr/>
+	</div>
+	{% for obj in subsections %}
+	<article class="subsection offset-sm-1 offset-md-1">
+	<div class='subsection-head'>
+		<h4 class = 'heading'> <strong>{{obj.title}}</strong> <a class = "edit-link"href="{{obj.get_subsection_edit_url}}">Edit</a></h4>
+		<p><span class="badge-secondary remark"> {{obj.remarks}} </span></p>
+		<!-- <ul>
+		<li><small>Date created: {{obj.date_created}} | Date last modified: {{obj.date_modified}}</small></li>
+		<li><small>Created by: {{obj.created_by}} | Last Modified by: {{obj.last_modified_by}} | Approved by: {{obj.approved_by}}</small></li>
+	</ul> -->
+	</div>
+	<div class="subsection-content">
+		<div class="row subsection-image text-center {{obj.slug}}">
+			{% for img in subsection_images %}
+				{% if img.subsection == obj %}
+				<figure class="col">
+					<img class="img-thumbnail" src="{{img.image.url}}" alt="Image">
+					<figcaption>Fig {{img.image_serial}}. {{img.caption}}</figcaption>
+				</figure>
+				{% endif %}
+			{% endfor %}
+		</div>
+		<div class = 'content'> {{ obj.content|markdown }} </div>
+	</div>
+	<hr/>
+	</article>
+
+	<script>
+	var n = $(".{{obj.slug}} > figure").length;
+	if(n == 1){
+		$(".{{obj.slug}}").removeClass("row");
+		$(".{{obj.slug}} > figure").removeClass("col");
+		$(".{{obj.slug}} > figure").addClass("image-single");
+		$(".subsection-content").addClass("clearfix");
+	}
+	</script>
+	{% endfor %}	
+</div>
+{%endblock content%}

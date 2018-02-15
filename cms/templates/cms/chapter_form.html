@@ -1,0 +1,18 @@
+{%extends "base.html"%}
+
+{% block path %}
+ <a href="{% url 'cms:subject_list' %}"> Home </a> | <a href="{{subject_instance.get_subject_select_url}}" >{{subject_instance}} </a>
+
+{% endblock path %}
+
+{% block content %}
+{% load crispy_forms_tags %}
+<div class = 'col-sm-6 col-sm-offset-2'>
+	{{subject_instance.subject_name}}
+	<form method = 'POST' action = '' enctype = 'multipart/form-data'>
+	{% csrf_token %}
+	{{form|crispy}}
+	<input type="submit" class= 'btn btn-default' value = "Okay"/>
+	</form>
+</div>
+{%endblock content %}

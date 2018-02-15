@@ -1,0 +1,24 @@
+{%extends "base.html"%}
+{% load crispy_forms_tags %}
+
+{% block headextra %}
+{{ form.media }}
+{% endblock headextra %}
+
+{% block path %}
+ <a href="{% url 'cms:subject_list' %}"> Home </a> | <a href="{{chapter_instance.get_subject_select_from_chapter}}" >{{chapter_instance.subject}} </a> | <a href = "{{chapter_instance.get_chapter_select_url}}" >{{chapter_instance.chapter_name}} </a> | <a href = "{{subtopic_instance.get_subtopic_select_url}}"> {{subtopic_instance}} </a>
+
+{% endblock path %}
+
+{% block content %}
+<div class = 'col-sm-6 col-sm-offset-2'>
+	<p>{{subtopic_instance.title}}</p>
+	<p><small>{{chapter_instance.chapter_name}}</small>
+	<small>{{chapter_instance.subject}}</small></p>
+	<form method = 'POST' action = '' enctype = 'multipart/form-data'>
+	{% csrf_token %}
+	{{form|crispy}}
+	<input type="submit" class= 'btn btn-default' value = "Okay"/>
+	</form>
+</div>
+{%endblock content %}

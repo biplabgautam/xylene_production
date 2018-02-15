@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block headextra %}
+	<link href="{% static 'cms/css/subject_list.css' %}" rel="stylesheet" type="text/css" >
+	<link href="https://fonts.googleapis.com/css?family=Bitter" rel="stylesheet">
+{% endblock headextra %}
+
+{%block content%}
+<div class="document">
+	<p><a href="{% url 'cms:subject_create' %}"> Create subject </a> </p>
+	<div class="card-deck">
+		{%for obj in subjects%}
+		  <div class="col-md-4 col-sm-6">
+		    <div class="card mb-3" style="height: 400px;">
+		    	{%if obj.poster_image %}
+		    	<a href="{{ obj.get_subject_select_url }}"> <img class="card-img-top img-fluid" src="{{obj.poster_thumbnail.url}}" alt="Card image cap"> </a>
+		    	{%endif%}
+		      <div class="card-body">
+		        <a href="{{ obj.get_subject_select_url }}"> <h4 class="heading card-title"> {{obj.subject_name}}</h4> </a>
+		        <small>Class: {{obj.grade}} </small>
+		        <p class="card-text">{{obj.poster_text}}</p>
+		      </div>
+		    </div>
+		  </div>
+		{% endfor %}
+	</div>
+{%endblock content%}

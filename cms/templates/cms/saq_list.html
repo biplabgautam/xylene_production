@@ -1,0 +1,32 @@
+{% extends 'chapter_base.html' %}
+{% load markdown_deux_tags %}
+{% load static %}
+
+{% block headmore %}
+<link rel="stylesheet" type="text/css" href="{% static 'cms/css/saq_detail.css' %}">
+{% endblock headmore %}
+
+{% block content %}
+<div class="document">
+	<div class="saq-head alert" role="alert">
+		<small>
+			<div class="path">
+				Path: <a href="{% url 'cms:subject_list' %}"> Home </a> | <a href="{{chapter_instance.get_subject_select_from_chapter}}" >{{chapter_instance.subject}} </a> | <a href = "{{chapter_instance.get_chapter_select_url}}" >{{chapter_instance.chapter_name}} </a> | <a href = "{{chapter_instance.get_saq_list_url}}"> SAQs </a>
+			</div>
+		</small>
+		<h1 class="heading">Short Answer Questions and Answers</h1>
+		<p><a href="{{chapter_instance.get_saq_create_url}}" >Add new </a></p>
+		<hr/>
+	</div>
+	<div class="saq-list offset-sm-1 offset-md-1">
+		{% for obj in saqs %}
+		<div class="saq-question heading">
+			<h4>{{obj.question_serial}}. {{obj.question}} <a class="edit-link" href="{{obj.get_saq_edit_url}}">Edit </a> </h4>
+			<p><span class="badge-secondary remark"> {{obj.remarks}} </span></p>
+		</div>
+			<div class="saq-answer content">{{obj.answer|markdown}}</div>
+			<hr/>
+		{%endfor%}
+	</div>
+</div>
+{% endblock content %}

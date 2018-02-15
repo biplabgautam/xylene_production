@@ -1,0 +1,20 @@
+.document{
+	margin-left: 5%;
+	margin-right: 5%;
+}
+
+.heading{
+	font-family: 'Bitter', 'serif' !important;
+}
+
+.subject-top{
+	padding-bottom: 2em !important;
+}
+
+.edit-link{
+	float: right;
+}
+
+.card{
+	box-shadow: 4px 4px 10px rgba(0,0,0,0.16);
+}
